@@ -1,0 +1,86 @@
+Create a production-quality frontend application for an Agentic Care Management Workflow platform using the provided raw HTML file as a visual and structural reference.
+
+Backend Status:
+
+* The backend is already developed and available as REST APIs.
+* All API endpoints are finalized and documented.
+* Agent implementation is still in progress, but endpoint contracts already exist.
+* Frontend must integrate with the existing backend architecture without changing API contracts.
+
+Requirements:
+
+* Use modern frontend architecture and best practices.
+* The UI must look significantly more polished and modern than the reference HTML while preserving the core workflow and information hierarchy.
+* Build a fully functional, demo-ready frontend application.
+* Use real API integrations wherever endpoints are available.
+* Use mocked/sample responses only for incomplete agent responses or streaming behaviors.
+
+Core Objectives:
+
+1. Convert the raw HTML into a scalable frontend application.
+2. Cover ALL available backend API endpoints in the UI.
+3. Ensure every workflow is interactive and demoable.
+4. Maintain clean component architecture and reusable design system.
+
+Technical Expectations:
+
+* Use responsive modern layouts.
+* Use reusable components, modular folder structure, and proper state management.
+* Include loading states, error handling, empty states, success notifications, and form validations.
+* Create centralized API abstraction layer for backend communication.
+* Use environment-based API configuration.
+* Follow accessibility and responsive design standards.
+
+Design Requirements:
+
+* Modern healthcare SaaS aesthetic.
+* Clean dashboards, workflow cards, timelines, agent panels, care summaries, patient profiles, task queues, and analytics widgets.
+* Smooth transitions and polished UX interactions.
+* Use professional typography, spacing, color consistency, and card-based layouts.
+* Include dark/light mode support if feasible.
+* Make UI visually impressive for stakeholder demos.
+
+Functional Requirements:
+
+* Authentication screens
+* Dashboard overview
+* Patient/case management
+* Care workflow tracking
+* Agent activity monitoring
+* Task management
+* Timeline/history view
+* Notifications/messages
+* API-driven tables and filters
+* Search and pagination
+* Settings/configuration pages
+* Real-time status indicators/mock streaming updates where appropriate
+
+API Integration Requirements:
+
+* Integrate every provided backend endpoint.
+* Create typed API services/hooks/interfaces.
+* Maintain strict separation between:
+
+  * API layer
+  * UI layer
+  * State management
+  * Utility/helpers
+* Handle auth tokens, retries, loading states, and API failures gracefully.
+* Build frontend in a way that future agent APIs can plug in seamlessly without major refactoring.
+
+Deliverables:
+
+* Complete frontend source code
+* Reusable component structure
+* Responsive pages for all workflows
+* Mock/demo-ready interactions
+* Clean README with setup instructions
+* Environment configuration example
+* Production-quality UI suitable for stakeholder/client demos
+
+Important:
+
+* Do not create placeholder wireframes only.
+* Build complete polished screens with realistic data and interactions.
+* Use the provided raw HTML strictly as workflow/reference guidance, not as final UI quality standard.
+* Ensure the application feels enterprise-grade, scalable, and investor-demo ready.
