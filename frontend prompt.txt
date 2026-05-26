@@ -84,3 +84,119 @@ Important:
 * Build complete polished screens with realistic data and interactions.
 * Use the provided raw HTML strictly as workflow/reference guidance, not as final UI quality standard.
 * Ensure the application feels enterprise-grade, scalable, and investor-demo ready.
+
+============================================================================================
+Build a lightweight AI-powered clinical documentation assistant integrated with an existing Care Management Platform using NVIDIA AI stack for learning purposes.
+
+Goal:
+Convert doctor-patient voice conversations into structured clinical notes in near real-time.
+
+Primary Use Case:
+Voice to Clinical Notes
+
+Key Requirement:
+The solution should be fully demoable with a working end-to-end backend flow. Even if simplified, the system must demonstrate:
+
+* Audio input processing
+* Speech-to-text conversion
+* AI-generated clinical notes
+* Structured SOAP note generation
+* API-based response output
+* Integration-ready backend services for the existing care management platform
+
+System Workflow:
+
+1. Accept live audio stream or uploaded audio file through backend API.
+2. Perform Speech-to-Text transcription.
+3. Identify medical entities, symptoms, medications, diagnoses, procedures, and follow-up instructions.
+4. Generate structured SOAP notes:
+
+   * Subjective
+   * Objective
+   * Assessment
+   * Plan
+5. Return generated notes through REST API response.
+6. Allow easy integration into existing care management workflows.
+
+Technical Expectations:
+
+* Use NVIDIA technologies wherever possible:
+
+  * NVIDIA Riva for ASR (Automatic Speech Recognition)
+  * NVIDIA NeMo for medical NLP
+  * NVIDIA NIM / LLM inference for summarization
+  * NVIDIA Triton Inference Server for deployment experimentation
+* Build backend APIs using Python FastAPI.
+* Use WebSocket or streaming pipeline for real-time transcription.
+* Support speaker diarization:
+
+  * Doctor
+  * Patient
+* Include confidence scores for transcription accuracy.
+* Maintain HIPAA-style secure handling practices for learning simulation.
+* No frontend/UI development required.
+
+Demo Requirements:
+
+* Must run entirely from backend/API level.
+* Provide API endpoints for:
+
+  * Audio upload
+  * Live transcription
+  * SOAP note generation
+  * Clinical summary retrieval
+* Include Swagger/OpenAPI documentation.
+* Include sample curl commands or Postman collection.
+* Include sample audio files for testing/demo.
+* Keep deployment lightweight so it can run locally or on a single GPU machine.
+* Return structured JSON responses for easy demo and integration.
+
+Desired Output Format:
+Generate structured JSON like:
+
+{
+"patient_name": "",
+"visit_date": "",
+"chief_complaint": "",
+"subjective": "",
+"objective": "",
+"assessment": "",
+"plan": "",
+"medications": [],
+"follow_up": "",
+"transcript_summary": "",
+"confidence_score": ""
+}
+
+Suggested API Endpoints:
+
+* POST /upload-audio
+* POST /stream-audio
+* GET /transcript/{id}
+* GET /soap-note/{id}
+* GET /summary/{id}
+
+Learning Objectives:
+
+* Understand end-to-end voice AI pipeline
+* Learn medical speech recognition workflow
+* Understand LLM-based summarization
+* Explore NVIDIA healthcare AI ecosystem
+* Experiment with real-time inference pipelines
+* Integrate AI services into an existing healthcare platform
+
+Optional Enhancements:
+
+* ICD-10 code suggestion
+* Medication extraction
+* Appointment summarization
+* Multi-language transcription
+* Ambient AI scribe capability
+* FHIR-compatible output
+* Risk score generation
+
+Suggested Architecture:
+Audio Input → FastAPI Backend → NVIDIA Riva ASR → NLP/LLM Processing → SOAP Note Generator → JSON API Response → Care Management Platform
+
+Focus:
+Keep implementation simple, modular, educational, backend-focused, and demo-ready rather than production-grade.
