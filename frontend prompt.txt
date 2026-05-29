@@ -200,3 +200,425 @@ Audio Input → FastAPI Backend → NVIDIA Riva ASR → NLP/LLM Processing → S
 
 Focus:
 Keep implementation simple, modular, educational, backend-focused, and demo-ready rather than production-grade.
+
+=============================================================================================== 
+
+Add Medical Knowledge Grounding (RAG) + Lightweight Streamlit Demo Frontend
+
+You are a senior AI healthcare systems engineer.
+
+I already have a working backend clinical documentation assistant built using:
+
+* FastAPI
+* Speech-to-text pipeline
+* SOAP note generation
+* Speaker diarization
+* REST APIs
+* NVIDIA-oriented AI architecture
+
+Current backend flow:
+Audio → ASR → Transcript → SOAP Note Generator → JSON API Response
+
+Now extend the system with:
+
+1. Medical Knowledge Grounding (RAG)
+2. Lightweight Streamlit frontend demo application
+
+The goal is:
+
+* educational
+* demo-ready
+* lightweight
+* locally runnable
+* integration-focused
+* not production-grade
+
+---
+
+# PRIMARY OBJECTIVE
+
+Enhance the existing AI medical scribe system by adding:
+
+## A. Medical Knowledge Grounding (RAG)
+
+The system should:
+
+* retrieve relevant medical knowledge
+* reduce hallucinations
+* improve SOAP note quality
+* generate clinically grounded summaries
+
+## B. Lightweight Streamlit Frontend
+
+Frontend should demonstrate:
+
+* audio upload
+* live transcription updates
+* SOAP note visualization
+* retrieved medical evidence
+* confidence scores
+* end-to-end workflow
+
+Keep UI simple and elegant.
+
+---
+
+# ARCHITECTURE TARGET
+
+Updated flow:
+
+Audio Input
+→ FastAPI Backend
+→ ASR Engine
+→ Transcript
+→ Medical Entity Extraction
+→ RAG Knowledge Retrieval
+→ LLM SOAP Generation
+→ Structured JSON Output
+→ Streamlit Visualization
+
+---
+
+# REQUIREMENTS
+
+# PART 1 — MEDICAL KNOWLEDGE GROUNDING (RAG)
+
+Implement Retrieval-Augmented Generation.
+
+## Functional Goals
+
+When transcript contains:
+
+* symptoms
+* diagnoses
+* medications
+* procedures
+
+the system should:
+
+* retrieve relevant medical context
+* inject context into SOAP generation
+* produce more medically grounded notes
+
+---
+
+# DATA SOURCES
+
+Use lightweight open datasets/sources such as:
+
+* PubMed abstracts
+* OpenFDA
+* MedlinePlus
+* sample clinical guidelines
+* locally stored medical documents
+
+Keep dataset small for local demo.
+
+---
+
+# VECTOR DATABASE
+
+Use lightweight vector database:
+
+Preferred:
+
+* FAISS
+
+Optional:
+
+* ChromaDB
+* Qdrant
+
+---
+
+# EMBEDDING MODEL
+
+Use lightweight embeddings:
+
+* BGE-small
+* sentence-transformers
+* e5-small
+
+Must support local inference.
+
+---
+
+# RAG PIPELINE
+
+Implement:
+
+1. Extract transcript
+2. Detect key medical entities
+3. Generate embedding
+4. Retrieve top-k medical references
+5. Inject retrieved context into LLM prompt
+6. Generate grounded SOAP note
+
+---
+
+# REQUIRED OUTPUT
+
+SOAP response should include:
+
+{
+"soap_note": {},
+"medical_context": [
+{
+"source": "",
+"snippet": "",
+"relevance_score": ""
+}
+]
+}
+
+---
+
+# PROMPTING REQUIREMENTS
+
+The SOAP generation prompt should:
+
+* use retrieved medical context
+* avoid hallucinations
+* mention uncertainty when confidence is low
+* generate concise clinician-friendly notes
+
+---
+
+# PART 2 — STREAMLIT FRONTEND
+
+Build a lightweight Streamlit application.
+
+No React or heavy frontend frameworks.
+
+---
+
+# STREAMLIT FEATURES
+
+## 1. Audio Upload Section
+
+Allow:
+
+* WAV
+* MP3
+* M4A
+
+---
+
+## 2. Live Pipeline Visualization
+
+Show pipeline stages:
+
+* Upload received
+* Transcription running
+* Medical extraction running
+* RAG retrieval running
+* SOAP generation complete
+
+Use:
+
+* progress bars
+* status indicators
+* expandable logs
+
+---
+
+## 3. Transcript Viewer
+
+Display:
+
+* diarized transcript
+* speaker labels
+* timestamps
+* confidence scores
+
+Example:
+[Doctor]: How are you feeling today?
+[Patient]: I have fever since 3 days.
+
+---
+
+## 4. SOAP Note Viewer
+
+Display formatted:
+
+* Subjective
+* Objective
+* Assessment
+* Plan
+
+Use styled cards/containers.
+
+---
+
+## 5. Medical Knowledge Panel
+
+Display retrieved references.
+
+Example:
+
+* Hypertension guideline snippet
+* Medication recommendation snippet
+* Retrieved medical evidence
+
+Show:
+
+* source
+* similarity score
+* retrieved text
+
+---
+
+## 6. JSON API Viewer
+
+Show raw backend JSON response.
+
+---
+
+## 7. Confidence Visualization
+
+Show:
+
+* transcription confidence
+* SOAP generation confidence
+* retrieval relevance scores
+
+Use:
+
+* charts
+* gauges
+* progress bars
+
+---
+
+# STREAMLIT UX REQUIREMENTS
+
+Keep UI:
+
+* modern
+* clean
+* healthcare themed
+* responsive
+* educational/demo-friendly
+
+Use:
+
+* sidebar navigation
+* tabs
+* expanders
+* status indicators
+
+No authentication required.
+
+---
+
+# BACKEND INTEGRATION
+
+Frontend must connect to existing FastAPI backend APIs.
+
+Add:
+GET /medical-context/{id}
+
+---
+
+# IMPLEMENTATION REQUIREMENTS
+
+Generate:
+
+* complete folder structure
+* backend additions
+* RAG service modules
+* Streamlit frontend code
+* API integration layer
+* requirements.txt
+* Dockerfile
+* environment variables
+* sample configuration
+
+---
+
+# CODE REQUIREMENTS
+
+Use:
+
+* Python 3.11+
+* FastAPI
+* Streamlit
+* FAISS
+* sentence-transformers
+* asyncio where useful
+
+Keep code:
+
+* modular
+* readable
+* beginner-friendly
+* educational
+
+---
+
+# PERFORMANCE TARGETS
+
+Must run:
+
+* locally
+* on single GPU
+* or CPU fallback
+
+Optimize for:
+
+* lightweight inference
+* low memory usage
+* demo simplicity
+
+---
+
+# OPTIONAL ENHANCEMENTS
+
+If feasible include:
+
+* ICD-10 suggestions
+* FHIR JSON export
+* multilingual transcript support
+* streaming websocket updates
+* dark mode UI
+
+---
+
+# DELIVERABLES
+
+Generate:
+
+1. Updated architecture
+2. Folder structure
+3. Backend implementation
+4. RAG retrieval pipeline
+5. Streamlit frontend
+6. API integration code
+7. Sample medical dataset loader
+8. Example API responses
+9. Docker setup
+10. Demo instructions
+11. Sample curl commands
+12. End-to-end execution guide
+
+---
+
+# IMPORTANT
+
+Focus on:
+
+* educational value
+* modular AI architecture
+* healthcare AI workflow understanding
+* NVIDIA ecosystem compatibility
+* clean demo experience
+
+Do NOT over-engineer.
+
+The system should be:
+
+* lightweight
+* understandable
+* demo-ready
+* locally runnable.
+
