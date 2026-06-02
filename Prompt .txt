@@ -1,0 +1,312 @@
+Build a production-ready EntityExtractionSkill for an enterprise Agentic AI platform.
+The skill must be implemented as a standalone reusable capability and must not include workflow orchestration, document ingestion, OCR, SharePoint connectors, or agent routing.
+The skill will be invoked by downstream workflows after document text has already been extracted.
+ 
+⸻
+ 
+Skill Name
+EntityExtractionSkill
+ 
+⸻
+ 
+Business Objective
+Extract structured entities from regulated enterprise content.
+The skill must identify and normalize entities such as:
+	•	Person Names
+	•	Organizations
+	•	Dates
+	•	Monetary Amounts
+	•	Addresses
+	•	Phone Numbers
+	•	Email Addresses
+	•	Policy Numbers
+	•	Claim Numbers
+	•	Member IDs
+	•	Provider IDs
+	•	Account Numbers
+	•	Case IDs
+	•	Jurisdictions
+	•	Locations
+	•	Medical Codes
+	•	Custom Vertical-Specific Entities
+The solution must support multiple industries and allow entity definitions to be configured without code changes.
+ 
+⸻
+ 
+Design Principle
+The solution must be AI-platform agnostic.
+Do not hardcode:
+	•	OpenAI
+	•	Anthropic
+	•	NVIDIA
+	•	Bedrock
+	•	Vertex AI
+Create an abstraction layer.
+class AIProvider(ABC):
+
+    @abstractmethod
+    async def generate(
+        self,
+        prompt: str,
+        temperature: float = 0
+    ) -> str:
+        pass
+The EntityExtractionSkill must interact only with this interface.
+ 
+⸻
+ 
+Supported Providers
+Implement provider adapters for:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic Claude
+	•	NVIDIA NIM
+	•	AWS Bedrock
+	•	Google Vertex AI
+	•	Generic OpenAI-compatible endpoints
+Provider selection must be configuration driven.
+Example:
+ai:
+  provider: anthropic
+  model: claude-sonnet
+or
+ai:
+  provider: nvidia
+  model: llama-3.3-70b-instruct
+No code changes should be required when switching providers.
+ 
+⸻
+ 
+Input
+{
+  "document_text": "...",
+  "metadata": {
+      "source": "sharepoint",
+      "document_type": "claim"
+  },
+  "entity_schema": [
+      "PERSON",
+      "ORGANIZATION",
+      "DATE",
+      "AMOUNT",
+      "CLAIM_ID"
+  ]
+}
+ 
+⸻
+ 
+Output
+{
+  "entities": [
+    {
+      "entity_type": "PERSON",
+      "value": "John Smith",
+      "normalized_value": "John Smith",
+      "confidence": 0.97,
+      "start_offset": 105,
+      "end_offset": 115
+    }
+  ]
+}
+ 
+⸻
+ 
+Core Requirements
+The skill must support:
+Named Entity Recognition
+Extract:
+	•	People
+	•	Organizations
+	•	Locations
+	•	Jurisdictions
+	•	Dates
+	•	Monetary values
+ 
+⸻
+ 
+Domain Entity Recognition
+Extract:
+	•	Claim IDs
+	•	Policy Numbers
+	•	Member IDs
+	•	Provider IDs
+	•	Authorization Numbers
+	•	Invoice Numbers
+	•	Contract IDs
+	•	Tax IDs
+ 
+⸻
+ 
+Configurable Entity Schemas
+The skill must allow runtime configuration.
+Example:
+Healthcare:
+entity_types:
+  - MEMBER_ID
+  - PROVIDER_ID
+  - ICD10_CODE
+  - CPT_CODE
+Insurance:
+entity_types:
+  - CLAIM_ID
+  - POLICY_NUMBER
+  - LOSS_DATE
+Financial Services:
+entity_types:
+  - ACCOUNT_NUMBER
+  - CUSTOMER_ID
+  - TAX_ID
+No code changes required.
+ 
+⸻
+ 
+Extraction Strategy
+Implement a hybrid extraction approach.
+Layer 1
+Rule-Based Extraction
+Use:
+	•	Regex patterns
+	•	Dictionaries
+	•	Validation rules
+Examples:
+claim_pattern = r"CLM-\d+"
+policy_pattern = r"POL-\d+"
+ 
+⸻
+ 
+Layer 2
+LLM Extraction
+Use configurable AI provider.
+Prompt should:
+	•	Extract only requested entities
+	•	Return structured JSON
+	•	Preserve source values
+	•	Avoid hallucinated entities
+ 
+⸻
+ 
+Layer 3
+Entity Validation
+Validate extracted values.
+Examples:
+	•	Date validation
+	•	Email validation
+	•	Phone validation
+	•	Policy format validation
+	•	Identifier format validation
+Invalid entities must be rejected.
+ 
+⸻
+ 
+Normalization
+Normalize extracted values.
+Examples:
+Dates:
+04/01/25
+becomes
+2025-04-01
+Amounts:
+USD 1,500.00
+becomes
+1500.00
+Names:
+Trim whitespace and standardize formatting.
+ 
+⸻
+ 
+Confidence Scoring
+Generate confidence score per entity.
+Combine:
+	•	Rule confidence
+	•	Validation confidence
+	•	LLM confidence
+Output score between:
+0.0 - 1.0
+ 
+⸻
+ 
+Explainability
+Each entity must contain:
+{
+  "reason": "Matched claim number pattern and validated format."
+}
+This will support auditability.
+ 
+⸻
+ 
+Performance Requirements
+Target:
+	•	P95 latency < 3 seconds
+	•	Async execution
+	•	Support documents up to 200 pages
+	•	Support batch extraction
+ 
+⸻
+ 
+Quality Requirements
+Acceptance Criteria:
+	•	F1 Score > 0.92 on labeled validation dataset
+	•	Precision > 0.90
+	•	Recall > 0.90
+	•	Entity schema configurable by vertical
+	•	Deterministic output structure
+ 
+⸻
+ 
+Architecture
+Generate:
+entity_extraction_skill/
+
+├── providers/
+├── prompts/
+├── services/
+├── validators/
+├── normalizers/
+├── models/
+├── config/
+├── metrics/
+├── tests/
+└── README.md
+ 
+⸻
+ 
+Required Components
+Generate:
+	1.	EntityExtractionSkill
+	2.	AIProvider interface
+	3.	Provider adapters
+	4.	PromptTemplateManager
+	5.	Entity validators
+	6.	Entity normalizers
+	7.	Confidence scoring engine
+	8.	Configuration management
+	9.	Structured logging
+	10.	Metrics collection
+	11.	Unit tests
+	12.	Integration tests
+	13.	README
+ 
+⸻
+ 
+MCP Compatibility
+The skill will later be exposed through MCP.
+Design clean request/response contracts that can easily become:
+extract_entities(
+    text,
+    entity_schema
+)
+Do not implement MCP server code.
+Only implement the reusable skill.
+ 
+⸻
+ 
+Use:
+	•	Python 3.12
+	•	Async programming
+	•	Pydantic v2
+	•	Dependency Injection
+	•	SOLID principles
+	•	Clean Architecture
+	•	Enterprise-grade production standards
+	•	Full type hints
+	•	Comprehensive test coverage
