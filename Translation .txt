@@ -1,0 +1,287 @@
+Build a production-ready TranslationSkill for an enterprise Agentic AI platform.
+The skill must be implemented as a standalone reusable capability and must not include workflow orchestration, OCR, document ingestion, SharePoint connectors, agent routing, or document classification.
+The skill will receive already-extracted text and return a translated version while preserving regulated terminology.
+ 
+⸻
+ 
+Skill Name
+TranslationSkill
+ 
+⸻
+ 
+Business Objective
+Translate regulated business content across supported languages while preserving meaning, terminology, compliance language, and domain-specific vocabulary.
+The skill must support:
+	•	English (EN)
+	•	Spanish (ES)
+	•	French (FR)
+	•	German (DE)
+	•	Portuguese (PT)
+	•	Japanese (JA)
+	•	Chinese (ZH)
+The solution must support configurable domain glossaries and terminology controls.
+ 
+⸻
+ 
+Design Principle
+The solution must be AI-platform agnostic.
+Do not hardcode:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic
+	•	NVIDIA
+	•	AWS Bedrock
+	•	Vertex AI
+Create an abstraction layer.
+class AIProvider(ABC):
+
+    @abstractmethod
+    async def generate(
+        self,
+        prompt: str,
+        temperature: float = 0
+    ) -> str:
+        pass
+TranslationSkill must interact only with this interface.
+ 
+⸻
+ 
+Supported Providers
+Implement provider adapters for:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic Claude
+	•	NVIDIA NIM
+	•	AWS Bedrock
+	•	Google Vertex AI
+	•	Generic OpenAI-compatible endpoints
+Provider selection must be configuration driven.
+Example:
+ai:
+  provider: anthropic
+  model: claude-sonnet
+or
+ai:
+  provider: openai
+  model: gpt-5
+or
+ai:
+  provider: nvidia
+  model: llama-3.3-70b-instruct
+No code changes should be required when switching providers.
+ 
+⸻
+ 
+Input
+{
+  "text": "...",
+  "source_language": "EN",
+  "target_language": "ES",
+  "domain": "healthcare",
+  "glossary_id": "healthcare_v1"
+}
+ 
+⸻
+ 
+Output
+{
+  "translated_text": "...",
+  "source_language": "EN",
+  "target_language": "ES",
+  "quality_score": 0.95,
+  "glossary_compliance_score": 1.0
+}
+ 
+⸻
+ 
+Core Requirements
+Language Translation
+Support:
+	•	EN ↔ ES
+	•	EN ↔ FR
+	•	EN ↔ DE
+	•	EN ↔ PT
+	•	EN ↔ JA
+	•	EN ↔ ZH
+The architecture must allow additional languages without code changes.
+ 
+⸻
+ 
+Terminology Controls
+Support domain-specific glossaries.
+Example:
+Healthcare:
+glossary:
+  member: afiliado
+  provider: proveedor
+  prior authorization: autorización previa
+Insurance:
+glossary:
+  claim: reclamación
+  policyholder: titular de póliza
+  deductible: deducible
+Financial Services:
+glossary:
+  beneficiary: beneficiario
+  account holder: titular de cuenta
+Glossary terms must always take precedence over model-generated alternatives.
+ 
+⸻
+ 
+Regulated Content Preservation
+The skill must preserve:
+	•	Policy numbers
+	•	Claim IDs
+	•	Member IDs
+	•	Account numbers
+	•	Legal references
+	•	Medical codes
+	•	ICD codes
+	•	CPT codes
+	•	Dates
+	•	Monetary values
+These must never be mistranslated.
+ 
+⸻
+ 
+Context-Aware Translation
+Translation must preserve:
+	•	Meaning
+	•	Tone
+	•	Compliance language
+	•	Legal intent
+	•	Medical terminology
+	•	Insurance terminology
+Avoid literal word-for-word translation when it changes meaning.
+ 
+⸻
+ 
+Translation QA
+Implement automated quality validation.
+Generate:
+{
+  "translation_quality_score": 0.95
+}
+Quality assessment should consider:
+	•	Semantic similarity
+	•	Terminology compliance
+	•	Completeness
+	•	Fluency
+ 
+⸻
+ 
+Back Translation Validation
+Implement optional back-translation QA.
+Process:
+	1.	Translate source → target
+	2.	Translate target → source
+	3.	Compare with original
+Output:
+{
+  "back_translation_score": 0.93
+}
+ 
+⸻
+ 
+Acceptance Criteria
+The solution must achieve:
+	•	Back-translation QA score > 0.9
+	•	Vertical glossaries respected
+	•	100% preservation of regulated identifiers
+	•	Consistent terminology usage
+	•	Deterministic output format
+ 
+⸻
+ 
+Prompt Strategy
+Create translation prompts that:
+	•	Preserve domain terminology
+	•	Respect glossary entries
+	•	Maintain regulatory language
+	•	Preserve identifiers
+	•	Avoid hallucinations
+	•	Return structured output
+ 
+⸻
+ 
+Confidence and Quality Scoring
+Generate:
+{
+  "quality_score": 0.94,
+  "glossary_compliance_score": 1.0,
+  "back_translation_score": 0.92
+}
+ 
+⸻
+ 
+Performance Requirements
+Target:
+	•	P95 latency < 3 seconds
+	•	Async execution
+	•	Batch translation support
+	•	Large document support
+	•	Chunking for long documents
+ 
+⸻
+ 
+Architecture
+Generate:
+translation_skill/
+
+├── providers/
+├── prompts/
+├── glossary/
+├── validators/
+├── qa/
+├── services/
+├── models/
+├── config/
+├── metrics/
+├── tests/
+└── README.md
+ 
+⸻
+ 
+Required Components
+Generate:
+	1.	TranslationSkill
+	2.	AIProvider interface
+	3.	Provider adapters
+	4.	GlossaryManager
+	5.	PromptTemplateManager
+	6.	TranslationQAEngine
+	7.	BackTranslationValidator
+	8.	Configuration management
+	9.	Structured logging
+	10.	Metrics collection
+	11.	Unit tests
+	12.	Integration tests
+	13.	README
+ 
+⸻
+ 
+MCP Compatibility
+The skill will later be exposed through MCP.
+Design request and response contracts that can easily become:
+translate(
+    text,
+    source_language,
+    target_language,
+    glossary
+)
+Do not implement MCP server code.
+Only implement the reusable TranslationSkill.
+ 
+⸻
+ 
+Use:
+	•	Python 3.12
+	•	Async programming
+	•	Pydantic v2
+	•	Dependency Injection
+	•	SOLID principles
+	•	Clean Architecture
+	•	Enterprise-grade production standards
+	•	Full type hints
+	•	Comprehensive test coverage
+	•	Provider-agnostic architecture
