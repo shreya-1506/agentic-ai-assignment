@@ -1,0 +1,387 @@
+Build a production-ready FormDataExtractionSkill for an enterprise Agentic AI platform.
+The skill must be implemented as a standalone reusable capability and must not include OCR engines, document ingestion workflows, SharePoint connectors, Box connectors, workflow orchestration, MCP server implementation, or agent routing.
+The skill will receive already-extracted text, layout metadata, and optional form structure information.
+ 
+⸻
+ 
+Skill Name
+FormDataExtractionSkill
+ 
+⸻
+ 
+Business Objective
+Extract structured field-level data from enterprise forms and convert it into normalized JSON.
+The solution must support:
+	•	Tax Forms (1040)
+	•	Insurance Forms (ACORD)
+	•	Healthcare Forms (CMS-1500)
+	•	HCFA Forms
+	•	Prior Authorization Forms
+	•	Claims Forms
+	•	Enrollment Forms
+	•	Custom Enterprise Forms
+The solution must support both:
+	•	Structured forms
+	•	Semi-structured forms
+without requiring code changes for each new form.
+ 
+⸻
+ 
+Design Principle
+The solution must be AI-platform agnostic.
+Do not hardcode:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic
+	•	NVIDIA
+	•	AWS Bedrock
+	•	Vertex AI
+Create an abstraction layer.
+class AIProvider(ABC):
+
+    @abstractmethod
+    async def generate(
+        self,
+        prompt: str,
+        temperature: float = 0
+    ) -> str:
+        pass
+The FormDataExtractionSkill must interact only with this interface.
+ 
+⸻
+ 
+Supported Providers
+Implement adapters for:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic Claude
+	•	NVIDIA NIM
+	•	AWS Bedrock
+	•	Google Vertex AI
+	•	Generic OpenAI-compatible endpoints
+Provider selection must be configuration driven.
+Example:
+ai:
+  provider: anthropic
+  model: claude-sonnet
+or
+ai:
+  provider: openai
+  model: gpt-5
+No code changes should be required when switching providers.
+ 
+⸻
+ 
+Input
+{
+  "document_text": "...",
+  "layout_data": {},
+  "form_type": "CMS1500",
+  "field_schema": {}
+}
+ 
+⸻
+ 
+Output
+{
+  "form_type": "CMS1500",
+  "fields": {
+    "patient_name": {
+      "value": "John Smith",
+      "confidence": 0.98
+    },
+    "member_id": {
+      "value": "M123456",
+      "confidence": 0.97
+    }
+  }
+}
+ 
+⸻
+ 
+Core Requirements
+Form Recognition
+The skill must support:
+	•	Known form templates
+	•	Unknown form templates
+	•	Versioned forms
+	•	Vendor-specific variations
+The skill should identify the form type before extraction when not supplied.
+ 
+⸻
+ 
+Field Extraction
+Extract:
+	•	Text fields
+	•	Numeric fields
+	•	Dates
+	•	Currency values
+	•	IDs
+	•	Checkboxes
+	•	Radio selections
+	•	Dropdown values
+	•	Tables
+	•	Repeating sections
+Examples:
+Healthcare:
+	•	Patient Name
+	•	Member ID
+	•	Provider NPI
+	•	Diagnosis Codes
+	•	CPT Codes
+	•	Service Dates
+Insurance:
+	•	Claim Number
+	•	Policy Number
+	•	Insured Name
+	•	Loss Date
+Tax:
+	•	SSN (masked if required)
+	•	Filing Status
+	•	Income Values
+ 
+⸻
+ 
+Configurable Field Schemas
+Support runtime configuration.
+Example:
+form_type: CMS1500
+
+fields:
+  - patient_name
+  - member_id
+  - diagnosis_code
+  - provider_npi
+Example:
+form_type: ACORD
+
+fields:
+  - policy_number
+  - insured_name
+  - claim_number
+No code changes required.
+ 
+⸻
+ 
+Hybrid Extraction Strategy
+Implement multi-stage extraction.
+Layer 1
+Layout Mapping
+Use coordinates, labels, section headers, and form structure.
+ 
+⸻
+ 
+Layer 2
+Rule-Based Extraction
+Use:
+	•	Field aliases
+	•	Label matching
+	•	Regex validation
+	•	Known form templates
+Example:
+member_id_pattern = r"[A-Z]\d{6,12}"
+ 
+⸻
+ 
+Layer 3
+LLM-Assisted Extraction
+Use configurable AI provider.
+Prompt should:
+	•	Extract only requested fields
+	•	Return structured JSON
+	•	Preserve original values
+	•	Avoid hallucinations
+ 
+⸻
+ 
+Table Extraction
+Support:
+	•	Claim line items
+	•	Service rows
+	•	Premium schedules
+	•	Financial tables
+Return:
+{
+  "service_lines": [
+    {
+      "procedure_code": "...",
+      "amount": "..."
+    }
+  ]
+}
+ 
+⸻
+ 
+Checkbox and Selection Extraction
+Support:
+	•	Checked
+	•	Unchecked
+	•	Multiple selection
+	•	Single selection
+Output:
+{
+  "gender": "Male"
+}
+or
+{
+  "consent_signed": true
+}
+ 
+⸻
+ 
+Validation Engine
+Validate:
+	•	Dates
+	•	IDs
+	•	Currency values
+	•	Diagnosis codes
+	•	CPT codes
+	•	Policy numbers
+	•	Member IDs
+Invalid values should be flagged.
+ 
+⸻
+ 
+Normalization
+Normalize extracted values.
+Examples:
+Dates:
+01/02/2025
+becomes
+2025-01-02
+Currency:
+$1,250.00
+becomes
+1250.00
+ 
+⸻
+ 
+Confidence Scoring
+Generate confidence per field.
+Output:
+{
+  "field_name": {
+    "value": "...",
+    "confidence": 0.96
+    }
+}
+Confidence should combine:
+	•	Layout confidence
+	•	Validation confidence
+	•	LLM confidence
+ 
+⸻
+ 
+Explainability
+Every extracted field must contain provenance.
+Example:
+{
+  "field_name": {
+    "value": "John Smith",
+    "source_label": "Patient Name",
+    "reason": "Matched form label and validated."
+  }
+}
+ 
+⸻
+ 
+Acceptance Criteria
+The solution must achieve:
+	•	Field-Level F1 > 0.95
+	•	Support top 20 forms per business vertical
+	•	Deterministic JSON output
+	•	High extraction consistency
+	•	Schema-driven extraction
+ 
+⸻
+ 
+Performance Requirements
+Target:
+	•	P95 latency < 5 seconds
+	•	Async execution
+	•	Batch extraction support
+	•	Large form support
+	•	Multi-page form support
+ 
+⸻
+ 
+Architecture
+Generate:
+form_data_extraction_skill/
+
+├── providers/
+├── prompts/
+├── schema_manager/
+├── validators/
+├── normalizers/
+├── template_matchers/
+├── extraction/
+├── confidence/
+├── models/
+├── config/
+├── metrics/
+├── tests/
+└── README.md
+ 
+⸻
+ 
+Required Components
+Generate:
+	1.	FormDataExtractionSkill
+	2.	AIProvider interface
+	3.	Provider adapters
+	4.	FormSchemaManager
+	5.	TemplateMatcher
+	6.	ExtractionEngine
+	7.	ValidationEngine
+	8.	NormalizationEngine
+	9.	ConfidenceScoringEngine
+	10.	Structured logging
+	11.	Metrics collection
+	12.	Unit tests
+	13.	Integration tests
+	14.	README
+ 
+⸻
+ 
+MCP Compatibility
+The skill will later be exposed through MCP.
+Design request and response contracts that can easily become:
+extract_form_data(
+    text,
+    form_type,
+    field_schema
+)
+Do not implement MCP server code.
+Only implement the reusable FormDataExtractionSkill.
+ 
+⸻
+ 
+Evaluation Framework
+Generate an evaluation framework that measures:
+	•	Field-level Precision
+	•	Field-level Recall
+	•	Field-level F1 Score
+	•	Form-level Accuracy
+	•	Missing Field Rate
+	•	Incorrect Field Mapping Rate
+The framework must support benchmarking against labeled datasets for:
+	•	1040
+	•	ACORD
+	•	CMS-1500
+	•	HCFA
+and additional custom forms.
+ 
+⸻
+ 
+Use:
+	•	Python 3.12
+	•	Async programming
+	•	Pydantic v2
+	•	Dependency Injection
+	•	SOLID principles
+	•	Clean Architecture
+	•	Enterprise-grade production standards
+	•	Full type hints
+	•	Comprehensive test coverage
+	•	Provider-agnostic architecture
