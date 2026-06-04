@@ -1,0 +1,32 @@
+Skill Name
+
+KYCRefreshWorkflowSkill
+
+⸻
+
+Business Objective
+
+Automatically perform periodic Know Your Customer (KYC) refresh reviews based on customer risk ratings, regulatory requirements, and profile changes.
+
+The skill must:
+
+	•	Identify customers due for KYC refresh based on configurable review cycles.
+	•	Detect changes in customer information since the last review.
+	•	Compare current and historical customer profiles.
+	•	Identify material changes in ownership, address, identity documents, business activities, risk indicators, and beneficial ownership structures.
+	•	Determine whether a refresh review can be completed automatically or requires analyst intervention.
+	•	Generate a comprehensive change summary and audit trail.
+	•	Support risk-based refresh frequencies (e.g., High Risk, Medium Risk, Low Risk).
+	•	Produce explainable refresh recommendations with complete compliance evidence.
+	•	Preserve regulatory auditability and reviewer traceability.
+	•	Integrate with customer records and document repositories through downstream systems.
+
+The skill should focus on ensuring regulatory compliance, reducing manual review effort, and enabling timely identification of customer risk profile changes while maintaining a complete history of all refresh decisions and detected changes.
+
+Acceptance Criteria Alignment:
+
+	•	SLA adherence > 95%
+	•	Change differences accurately detected and attached to refresh cases
+	•	Complete audit trail maintained for every refresh decision
+	•	Risk-based refresh scheduling consistently applied
+	•	Reviewer-ready change summaries generated automatically
