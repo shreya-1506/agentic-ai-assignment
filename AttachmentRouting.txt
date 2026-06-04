@@ -1,0 +1,330 @@
+Build a production-ready AttachmentRoutingSkill for an enterprise Agentic AI platform.
+The skill must be implemented as a standalone reusable capability and must not include email ingestion workflows, Outlook connectors, SharePoint connectors, ServiceNow connectors, workflow orchestration, MCP server implementation, or agent routing frameworks.
+The skill will receive attachment metadata and classification results from upstream skills and determine the correct destination system.
+ 
+⸻
+ 
+Skill Name
+AttachmentRoutingSkill
+ 
+⸻
+ 
+Business Objective
+Automatically determine the correct system of record for incoming attachments.
+The skill must:
+	•	Analyze attachment metadata
+	•	Analyze document classification results
+	•	Analyze email context
+	•	Analyze business rules
+	•	Select the correct destination
+	•	Generate routing decisions
+	•	Preserve auditability and chain of custody
+The skill itself does not move files.
+It only makes routing decisions.
+ 
+⸻
+ 
+Design Principle
+The solution must be AI-platform agnostic.
+Do not hardcode:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic
+	•	NVIDIA
+	•	AWS Bedrock
+	•	Vertex AI
+Create an abstraction layer.
+class AIProvider(ABC):
+
+    @abstractmethod
+    async def generate(
+        self,
+        prompt: str,
+        temperature: float = 0
+    ) -> str:
+        pass
+The AttachmentRoutingSkill must interact only with this interface.
+ 
+⸻
+ 
+Supported Providers
+Implement adapters for:
+	•	OpenAI
+	•	Azure OpenAI
+	•	Anthropic Claude
+	•	NVIDIA NIM
+	•	AWS Bedrock
+	•	Google Vertex AI
+	•	Generic OpenAI-compatible endpoints
+Provider selection must be configuration driven.
+Example:
+ai:
+  provider: anthropic
+  model: claude-sonnet
+No code changes should be required when switching providers.
+ 
+⸻
+ 
+MCP Dependencies Context
+The skill will be used with:
+	•	Outlook
+	•	SharePoint
+	•	ServiceNow
+However, the skill must not directly connect to them.
+The skill only produces routing recommendations.
+ 
+⸻
+ 
+Input
+{
+  "attachment_name": "claim_form.pdf",
+  "attachment_type": "pdf",
+  "document_classification": {
+      "document_type": "Claim Form",
+      "confidence": 0.97
+  },
+  "email_context": {
+      "subject": "New Claim Submission",
+      "sender": "customer@company.com"
+  },
+  "routing_ruleset": "claims_v1"
+}
+ 
+⸻
+ 
+Output
+{
+  "destination_system": "ServiceNow",
+  "destination_queue": "Claims Intake",
+  "confidence": 0.98,
+  "routing_reason": "Claim Form routed to Claims Intake queue",
+  "audit_trail": {}
+}
+ 
+⸻
+ 
+Core Requirements
+Attachment Understanding
+The skill must evaluate:
+	•	File name
+	•	File extension
+	•	MIME type
+	•	Document classification output
+	•	Email metadata
+	•	Business context
+Examples:
+claim_form.pdf
+invoice.pdf
+nda.docx
+medical_record.pdf
+ 
+⸻
+ 
+Routing Decision Engine
+Support routing based on:
+	•	Document Type
+	•	Business Unit
+	•	Sender
+	•	Customer
+	•	Case Context
+	•	Priority
+	•	Compliance Rules
+Example:
+rules:
+  Claim Form:
+    destination: ServiceNow
+    queue: Claims Intake
+
+  Invoice:
+    destination: SharePoint
+    library: Accounts Payable
+
+  NDA:
+    destination: SharePoint
+    library: Legal
+No code changes required when adding routes.
+ 
+⸻
+ 
+Configurable Routing Policies
+Support runtime configuration.
+Example:
+routing_policy:
+
+  Claim Form:
+      destination_system: ServiceNow
+      queue: Claims
+
+  Medical Record:
+      destination_system: SharePoint
+      library: Medical Records
+
+  KYC Document:
+      destination_system: SharePoint
+      library: Compliance
+ 
+⸻
+ 
+Hybrid Routing Strategy
+Layer 1
+Deterministic Rules
+Apply routing policies.
+ 
+⸻
+ 
+Layer 2
+Classification Validation
+Validate incoming classification confidence.
+Example:
+if classification_confidence < 0.80:
+    send_for_review()
+ 
+⸻
+ 
+Layer 3
+LLM Routing Assistance
+Use configurable AI provider only when:
+	•	Multiple routes are possible
+	•	Context is ambiguous
+	•	Routing rules conflict
+LLM must explain the recommendation.
+ 
+⸻
+ 
+Ambiguity Handling
+If routing confidence is low:
+{
+  "requires_review": true
+}
+The skill must never force uncertain routing decisions.
+ 
+⸻
+ 
+Chain of Custody
+Every routing decision must generate provenance information.
+Example:
+{
+  "decision_id": "...",
+  "timestamp": "...",
+  "document_type": "Claim Form",
+  "destination": "ServiceNow",
+  "rule_applied": "claims_policy_v2"
+}
+ 
+⸻
+ 
+Audit Trail
+Generate complete audit information.
+Example:
+{
+  "audit_log": {
+      "routing_rule": "claims_policy_v2",
+      "classification_source": "DocumentClassifierSkill",
+      "confidence": 0.98
+  }
+}
+ 
+⸻
+ 
+Explainability
+Every routing decision must contain:
+{
+  "reason":
+  "Document classified as Claim Form and matched Claims Intake routing rule."
+}
+ 
+⸻
+ 
+Acceptance Criteria
+The solution must achieve:
+	•	Misroute rate < 1%
+	•	Chain of custody preserved
+	•	Complete audit trail
+	•	Deterministic routing output
+	•	Configurable routing policies
+ 
+⸻
+ 
+Performance Requirements
+Target:
+	•	P95 latency < 1 second
+	•	Async execution
+	•	High throughput support
+	•	Batch routing support
+ 
+⸻
+ 
+Architecture
+Generate:
+attachment_routing_skill/
+
+├── providers/
+├── prompts/
+├── routing_engine/
+├── policy_manager/
+├── validators/
+├── confidence/
+├── audit/
+├── models/
+├── config/
+├── metrics/
+├── tests/
+└── README.md
+ 
+⸻
+ 
+Required Components
+Generate:
+	1.	AttachmentRoutingSkill
+	2.	AIProvider interface
+	3.	Provider adapters
+	4.	RoutingPolicyManager
+	5.	RoutingDecisionEngine
+	6.	ConfidenceScoringEngine
+	7.	AuditTrailManager
+	8.	ChainOfCustodyTracker
+	9.	Structured logging
+	10.	Metrics collection
+	11.	Unit tests
+	12.	Integration tests
+	13.	README
+ 
+⸻
+ 
+MCP Compatibility
+The skill will later be exposed through MCP.
+Design request and response contracts that can easily become:
+route_attachment(
+    attachment_metadata,
+    classification_result,
+    email_context
+)
+Do not implement MCP server code.
+Only implement the reusable AttachmentRoutingSkill.
+ 
+⸻
+ 
+Evaluation Framework
+Generate an evaluation framework that measures:
+	•	Routing Accuracy
+	•	Misroute Rate
+	•	Human Review Rate
+	•	Policy Compliance Rate
+	•	Confidence Calibration
+	•	Chain-of-Custody Completeness
+The framework must validate the requirement:
+Misroute Rate < 1%
+ 
+⸻
+ 
+Use:
+	•	Python 3.12
+	•	Async programming
+	•	Pydantic v2
+	•	Dependency Injection
+	•	SOLID principles
+	•	Clean Architecture
+	•	Enterprise-grade production standards
+	•	Full type hints
+	•	Comprehensive test coverage
+	•	Provider-agnostic architecture
