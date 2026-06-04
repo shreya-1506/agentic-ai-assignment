@@ -1,0 +1,49 @@
+Skill Name
+
+VendorDueDiligenceSkill
+
+⸻
+
+Business Objective
+
+Automate vendor due diligence reviews by collecting, validating, analyzing, and assessing vendor risk information while ensuring all required compliance artifacts, attestations, and risk controls are completed before onboarding, renewal, or periodic review.
+
+The skill must:
+
+	•	Evaluate vendors against organizational risk, compliance, security, privacy, and regulatory requirements.
+	•	Collect and validate required due diligence artifacts such as:
+	•	Security questionnaires
+	•	SOC 1 / SOC 2 reports
+	•	ISO certifications
+	•	Financial statements
+	•	Business licenses
+	•	Insurance certificates
+	•	Privacy and data protection documents
+	•	Regulatory attestations
+	•	Sanctions screening results
+	•	Identify missing, expired, inconsistent, or incomplete documentation.
+	•	Assess vendor risk across multiple dimensions including:
+	•	Information Security
+	•	Data Privacy
+	•	Regulatory Compliance
+	•	Financial Stability
+	•	Operational Risk
+	•	Geographic Risk
+	•	Fourth-Party Risk
+	•	Assign risk tiers (e.g., Low, Medium, High, Critical) using configurable risk scoring models.
+	•	Generate explainable risk assessments with supporting evidence and rationale.
+	•	Flag high-risk vendors for additional review and escalation.
+	•	Produce reviewer-ready due diligence summaries and recommendations.
+	•	Support configurable due diligence requirements by vendor category, service type, and risk profile.
+	•	Maintain complete audit trails for all risk determinations, document reviews, and approval decisions.
+	•	Enable compliance, procurement, legal, and risk teams to accelerate vendor onboarding while maintaining governance and regulatory compliance.
+
+Acceptance Criteria Alignment:
+
+	•	Required attestations collected and validated before completion.
+	•	Vendor risk tier accurately assigned using approved risk methodology.
+	•	Missing or expired artifacts automatically identified and flagged.
+	•	Complete audit trail maintained for every due diligence review.
+	•	Reviewer-ready risk assessment package generated automatically.
+	•	Due diligence processing time reduced while maintaining compliance standards.
+	•	Risk scoring remains explainable, reproducible, and configurable through policy-driven rules.
