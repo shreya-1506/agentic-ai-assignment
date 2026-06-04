@@ -1,0 +1,34 @@
+Skill Name
+
+NDATriageSkill
+
+⸻
+
+Business Objective
+
+Automatically review, classify, and triage Non-Disclosure Agreements (NDAs) against approved legal playbooks and organizational risk policies.
+
+The skill must:
+
+	•	Analyze NDA documents and identify key legal clauses.
+	•	Compare contract language against predefined legal playbooks and fallback positions.
+	•	Classify NDAs into risk categories:
+	•	GREEN – Fully compliant with approved standards and can be fast-tracked.
+	•	YELLOW – Contains deviations requiring legal review.
+	•	RED – Contains high-risk or unacceptable clauses requiring escalation.
+	•	Detect deviations from approved language related to confidentiality obligations, term duration, governing law, indemnification, liability limitations, intellectual property rights, data protection requirements, non-solicitation clauses, and dispute resolution provisions.
+	•	Generate clause-level explanations for every risk determination.
+	•	Propose redlines and alternative language based on approved legal playbooks.
+	•	Produce a reviewer-ready summary highlighting key risks, deviations, and recommended actions.
+	•	Support configurable playbooks, fallback positions, and risk thresholds without code changes.
+	•	Maintain complete auditability and traceability of all classification and recommendation decisions.
+	•	Enable legal teams to prioritize reviews and accelerate contract turnaround while ensuring policy compliance.
+
+Acceptance Criteria Alignment:
+
+	•	Playbook adherence > 95%
+	•	NDA classification accuracy meets legal review standards
+	•	Clause-level risk explanations generated for all flagged provisions
+	•	Recommended redlines align with approved legal playbooks
+	•	Review cycle time reduced while maintaining legal compliance and auditability
+	•	Complete decision trail preserved for every triage outcome
