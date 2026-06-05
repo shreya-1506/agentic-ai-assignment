@@ -1,0 +1,65 @@
+Skill Name
+
+RollForwardScheduleBuilderSkill
+
+⸻
+
+Business Objective
+
+Automate the preparation, validation, reconciliation, and explanation of financial roll-forward schedules by calculating beginning balances, period activity, adjustments, reversals, and ending balances while ensuring full traceability to the General Ledger (GL).
+
+The skill must:
+
+	•	Generate roll-forward schedules for balance sheet and income statement accounts using period-over-period financial activity.
+	•	Calculate and validate:
+	•	Beginning Balance
+	•	Period Activity
+	•	Additions
+	•	Adjustments
+	•	Reclassifications
+	•	Accruals
+	•	Reversals
+	•	Ending Balance
+	•	Ensure roll-forward calculations reconcile to the General Ledger and supporting subledgers.
+	•	Automatically identify unexplained variances, missing activity, unsupported adjustments, and reconciliation breaks.
+	•	Generate audit-ready explanations for all material movements and balance changes.
+	•	Trace every balance movement to its originating transaction, journal entry, subledger record, or supporting documentation.
+	•	Support configurable roll-forward templates for different account types, entities, business units, and reporting requirements.
+	•	Apply materiality thresholds to prioritize significant movements requiring review.
+	•	Produce reviewer-ready schedules with supporting evidence and reconciliation summaries.
+	•	Maintain complete audit trails, calculation lineage, and financial data provenance.
+	•	Enable finance and accounting teams to accelerate month-end, quarter-end, and year-end close processes while improving accuracy and compliance.
+
+⸻
+
+Acceptance Criteria Alignment
+
+	•	Beginning Balance + Activity + Adjustments + Reversals = Ending Balance validated for all schedules.
+	•	Roll-forward schedules fully reconcile to the General Ledger.
+	•	Materiality thresholds consistently applied according to accounting policy.
+	•	All schedule balances traceable to supporting transactions and source systems.
+	•	Audit-ready schedules generated with complete supporting evidence.
+	•	Reconciliation exceptions automatically identified and explained.
+	•	Schedule preparation time reduced while maintaining accounting control standards.
+	•	Complete calculation lineage and audit trail preserved for every roll-forward schedule.
+
+⸻
+
+Key Outputs
+
+	•	Roll-Forward Schedule
+	•	GL Reconciliation Report
+	•	Variance Analysis Summary
+	•	Material Movement Explanation
+	•	Audit Support Package
+	•	Exception & Break Report
+	•	Source-to-GL Traceability Report
+	•	Reviewer Approval Package
+
+This aligns directly with your tracker description:
+
+“Beginning + activity + reversals = ending; ties to GL”
+
+and acceptance criteria:
+
+“Schedules tie; audit-ready.”
