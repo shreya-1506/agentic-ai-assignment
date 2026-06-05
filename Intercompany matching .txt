@@ -1,0 +1,66 @@
+Skill Name
+
+IntercompanyMatchingSkill
+
+⸻
+
+Business Objective
+
+Automate the identification, matching, reconciliation, and analysis of intercompany transactions across entities to ensure balances align, exceptions are quantified, and unresolved differences are tracked through resolution.
+
+The skill must:
+
+	•	Match intercompany transactions, balances, invoices, accruals, journal entries, and settlements across legal entities.
+	•	Reconcile intercompany receivables, payables, revenues, expenses, loans, and transfer pricing transactions.
+	•	Identify unmatched, partially matched, duplicate, and conflicting transactions.
+	•	Detect timing differences, currency conversion variances, posting discrepancies, and data quality issues that create intercompany imbalances.
+	•	Automatically classify reconciliation breaks and determine likely root causes.
+	•	Calculate and quantify intercompany differences at transaction, account, entity, and consolidated reporting levels.
+	•	Track aging of unresolved intercompany balances and reconciliation exceptions.
+	•	Generate explainable matching decisions with supporting transaction evidence.
+	•	Support configurable matching rules including:
+	•	Exact Match
+	•	Fuzzy Match
+	•	Amount Tolerance Matching
+	•	Date Tolerance Matching
+	•	Currency Conversion Matching
+	•	Reference Number Matching
+	•	Multi-Line Transaction Matching
+	•	Prioritize material exceptions based on configurable thresholds.
+	•	Produce reviewer-ready reconciliation reports, imbalance analyses, and exception summaries.
+	•	Maintain complete audit trails and traceability from matched balances back to originating transactions and source systems.
+	•	Enable finance and accounting teams to accelerate period-end close while improving intercompany reconciliation accuracy and governance.
+
+⸻
+
+Acceptance Criteria Alignment
+
+	•	Intercompany imbalances accurately identified and quantified.
+	•	Unmatched and partially matched transactions automatically classified.
+	•	Aging of unresolved intercompany differences continuously tracked.
+	•	Matching decisions are explainable and fully auditable.
+	•	Reconciliation results traceable to source transactions.
+	•	Material exceptions prioritized according to configurable thresholds.
+	•	Reviewer-ready reconciliation and imbalance reports generated automatically.
+	•	Complete audit trail maintained for all matching, exception, and resolution activities.
+
+⸻
+
+Key Outputs
+
+	•	Intercompany Match Report
+	•	Unmatched Transaction Report
+	•	Imbalance Quantification Summary
+	•	Break Classification Report
+	•	Aging Analysis Report
+	•	Entity-to-Entity Reconciliation Report
+	•	Root Cause Analysis Summary
+	•	Audit & Traceability Package
+
+This aligns directly with your tracker description:
+
+“Match intercompany positions and identify imbalances”
+
+and acceptance criteria:
+
+“Imbalances quantified; aging tracked.”

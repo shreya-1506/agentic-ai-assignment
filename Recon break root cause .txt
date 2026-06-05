@@ -1,0 +1,68 @@
+Skill Name
+
+ReconBreakRootCauseSkill
+
+⸻
+
+Business Objective
+
+Automate the investigation, analysis, and explanation of reconciliation breaks by tracing discrepancies across source systems, transactions, journal entries, and accounting records to identify the originating cause and provide audit-ready evidence.
+
+The skill must:
+
+	•	Analyze reconciliation breaks between General Ledger (GL), subledgers, bank statements, operational systems, and supporting records.
+	•	Trace discrepancies to their originating transactions, journal entries, accounting events, or source system records.
+	•	Correlate data across both sides of the reconciliation to determine why balances, transactions, or positions do not match.
+	•	Identify and classify common root causes including:
+	•	Timing differences
+	•	Missing transactions
+	•	Duplicate postings
+	•	Incorrect account mappings
+	•	Currency conversion differences
+	•	Posting errors
+	•	Data integration failures
+	•	Manual journal adjustments
+	•	Reference data mismatches
+	•	System processing defects
+	•	Perform multi-step lineage analysis from reconciliation break to source transaction.
+	•	Quantify the financial impact of each identified break and root cause.
+	•	Generate explainable root-cause narratives supported by transaction-level evidence.
+	•	Prioritize breaks based on materiality, aging, financial impact, and operational risk.
+	•	Recommend corrective actions and remediation paths for each break category.
+	•	Maintain complete audit trails showing how root-cause conclusions were reached.
+	•	Support configurable reconciliation rules, matching tolerances, and accounting policies without requiring code changes.
+	•	Enable finance and accounting teams to significantly reduce manual investigation effort while improving reconciliation quality and close-cycle efficiency.
+
+⸻
+
+Acceptance Criteria Alignment
+
+	•	Root cause identified and cited for each reconciliation break.
+	•	Supporting evidence linked to originating transactions and accounting records.
+	•	Reconciliation breaks accurately classified into standardized categories.
+	•	Financial impact of each break quantified and documented.
+	•	Complete transaction lineage preserved from break to source record.
+	•	Reviewer-ready root-cause reports generated automatically.
+	•	Audit-ready evidence package maintained for every investigation.
+	•	Investigation cycle time reduced while maintaining accounting control standards.
+
+⸻
+
+Key Outputs
+
+	•	Root Cause Investigation Report
+	•	Break Classification Summary
+	•	Transaction Lineage Report
+	•	Financial Impact Analysis
+	•	Supporting Evidence Package
+	•	Remediation Recommendation Report
+	•	Aging & Materiality Dashboard
+	•	Audit & Compliance Package
+
+This aligns directly with your tracker description:
+
+“Trace break to originating entry on both sides”
+
+and acceptance criteria:
+
+“Root cause cited per break.”
