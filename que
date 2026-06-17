@@ -10,4 +10,3 @@ How would you design an end-to-end speech analytics pipeline, from raw audio to 
 Can you explain the foundational concepts and mathematics behind LLMs, including transformers, attention mechanisms, embeddings, and how these concepts influence practical system design?
 What are the major challenges and edge cases when deploying AI/LLM solutions into production, and what strategies would you use to address issues such as hallucinations, security, scalability, monitoring, and governance?
 
-postgresql://neondb_owner:npg_4pabMfIAEs2k@ep-dark-fog-adce2xnz.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
