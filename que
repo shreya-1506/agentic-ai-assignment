@@ -1,0 +1,11 @@
+Walk me through your most recent AI/LLM project end-to-end. What business problem were you solving, what was your architecture, and what were the key design trade-offs?
+How would you design a production-grade RAG system for analyzing large-scale customer call transcripts (e.g., 120K+ transcripts), including data ingestion, chunking, embeddings, retrieval, prompting, and response generation?
+How would you reduce hallucinations and improve the reliability of a RAG system, especially when retrieved historical information conflicts with current user context or assumptions?
+What are embeddings and vector databases, what information is stored in a vector database, and why do we need a vector database if we already have embeddings?
+How does retrieval work in a vector database, and what indexing and similarity techniques (e.g., cosine similarity, HNSW, IVF, hybrid search) would you use to optimize search quality and performance?
+How would you evaluate and continuously improve a RAG/LLM system? Which metrics (e.g., NDCG, Precision@K, Recall@K, faithfulness) would you use, and how would you validate the quality of LLM-generated outputs?
+How would you design and scale an enterprise LLM solution while meeting latency, SLA, and cost requirements? What strategies would you use to optimize response time and system robustness?
+How would you approach topic modeling and multi-label classification for large-scale conversation analytics, and how would you automatically aggregate thousands of granular topics into higher-level themes?
+How would you design an end-to-end speech analytics pipeline, from raw audio to business insights? How would you handle noisy audio, multiple speakers, accents, and multilingual conversations in a speech analytics solution?
+Can you explain the foundational concepts and mathematics behind LLMs, including transformers, attention mechanisms, embeddings, and how these concepts influence practical system design?
+What are the major challenges and edge cases when deploying AI/LLM solutions into production, and what strategies would you use to address issues such as hallucinations, security, scalability, monitoring, and governance?
