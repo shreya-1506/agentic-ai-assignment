@@ -1,0 +1,123 @@
+You are a senior full-stack engineer working on a Claims Portal demo application.
+
+## Objective
+
+Incorporate the latest demo feedback while minimizing changes to existing functionality.
+
+### Important
+
+The following are ALREADY IMPLEMENTED and should be reused, not rebuilt:
+
+* HR Dashboard
+* Senior Examiner Dashboard
+
+Only make the necessary enhancements and entry points required for the demo.
+
+---
+
+## 1. Employee SSO Landing Page
+
+Create a dedicated Employee SSO landing page.
+
+Requirements:
+
+* Enterprise-style sign-in screen
+* Company branding
+* "Sign in with Company SSO" button
+* Mock authentication only (no real SSO integration)
+* Include a code comment indicating where production SSO would be integrated
+* After clicking Sign In, navigate directly to the Employee Dashboard
+
+---
+
+## 2. Employee Dashboard Landing Page
+
+Create a landing page/dashboard for Employees containing four primary actions:
+
+### File Claim
+
+* Navigate to the existing claim filing workflow
+
+### Contact HR
+
+* Navigate to a static informational page containing:
+
+  * HR email
+  * HR phone number
+  * Office hours
+  * Benefits support information
+
+### Find Provider
+
+* Navigate to a static provider directory page
+* Use mock provider data
+* Display:
+
+  * Provider name
+  * Specialty
+  * Location
+  * Contact information
+
+### Check Claim Status
+
+* Navigate to the existing claim status functionality
+
+Use a modern dashboard/card layout consistent with the rest of the application.
+
+---
+
+## 3. HR SSO Landing Page
+
+Create a dedicated HR SSO landing page.
+
+Requirements:
+
+* Reuse existing application styling
+* Mock SSO experience only
+* "Sign in with Company SSO" button
+* After sign-in, navigate directly to the EXISTING HR Dashboard
+* Do NOT modify or rebuild the HR Dashboard
+
+---
+
+## 4. Senior Examiner SSO Landing Page
+
+Create a dedicated Senior Examiner SSO landing page.
+
+Requirements:
+
+* Same SSO experience as Employee and HR
+* Mock authentication only
+* After sign-in, navigate directly to the EXISTING Senior Examiner Dashboard
+* Do NOT modify or rebuild the Senior Examiner Dashboard
+
+---
+
+## 5. Design Expectations
+
+* Modern enterprise look and feel
+* Responsive design
+* Consistent branding
+* Clean navigation
+* Professional insurance/claims administration styling
+* Reuse existing design system and components where possible
+
+---
+
+## Deliverables
+
+1. Employee SSO landing page
+2. Employee dashboard landing page with:
+
+   * File Claim
+   * Contact HR
+   * Find Provider
+   * Check Claim Status
+3. Contact HR static page
+4. Find Provider static page
+5. HR SSO landing page that routes to the existing HR Dashboard
+6. Senior Examiner SSO landing page that routes to the existing Senior Examiner Dashboard
+7. Routing updates only where required
+8. Preserve all existing functionality
+
+First analyze the current routing, authentication flow, and dashboard structure. Reuse existing components and patterns whenever possible, and avoid unnecessary refactoring.
