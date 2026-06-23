@@ -1,312 +1,253 @@
-Build a production-ready EntityExtractionSkill for an enterprise Agentic AI platform.
-The skill must be implemented as a standalone reusable capability and must not include workflow orchestration, document ingestion, OCR, SharePoint connectors, or agent routing.
-The skill will be invoked by downstream workflows after document text has already been extracted.
- 
-⸻
- 
-Skill Name
-EntityExtractionSkill
- 
-⸻
- 
-Business Objective
-Extract structured entities from regulated enterprise content.
-The skill must identify and normalize entities such as:
-	•	Person Names
-	•	Organizations
-	•	Dates
-	•	Monetary Amounts
-	•	Addresses
-	•	Phone Numbers
-	•	Email Addresses
-	•	Policy Numbers
-	•	Claim Numbers
-	•	Member IDs
-	•	Provider IDs
-	•	Account Numbers
-	•	Case IDs
-	•	Jurisdictions
-	•	Locations
-	•	Medical Codes
-	•	Custom Vertical-Specific Entities
-The solution must support multiple industries and allow entity definitions to be configured without code changes.
- 
-⸻
- 
-Design Principle
-The solution must be AI-platform agnostic.
-Do not hardcode:
-	•	OpenAI
-	•	Anthropic
-	•	NVIDIA
-	•	Bedrock
-	•	Vertex AI
-Create an abstraction layer.
-class AIProvider(ABC):
+# Employee Claims Portal Enhancement Request
 
-    @abstractmethod
-    async def generate(
-        self,
-        prompt: str,
-        temperature: float = 0
-    ) -> str:
-        pass
-The EntityExtractionSkill must interact only with this interface.
- 
-⸻
- 
-Supported Providers
-Implement provider adapters for:
-	•	OpenAI
-	•	Azure OpenAI
-	•	Anthropic Claude
-	•	NVIDIA NIM
-	•	AWS Bedrock
-	•	Google Vertex AI
-	•	Generic OpenAI-compatible endpoints
-Provider selection must be configuration driven.
-Example:
-ai:
-  provider: anthropic
-  model: claude-sonnet
-or
-ai:
-  provider: nvidia
-  model: llama-3.3-70b-instruct
-No code changes should be required when switching providers.
- 
-⸻
- 
-Input
-{
-  "document_text": "...",
-  "metadata": {
-      "source": "sharepoint",
-      "document_type": "claim"
-  },
-  "entity_schema": [
-      "PERSON",
-      "ORGANIZATION",
-      "DATE",
-      "AMOUNT",
-      "CLAIM_ID"
-  ]
-}
- 
-⸻
- 
-Output
-{
-  "entities": [
-    {
-      "entity_type": "PERSON",
-      "value": "John Smith",
-      "normalized_value": "John Smith",
-      "confidence": 0.97,
-      "start_offset": 105,
-      "end_offset": 115
-    }
-  ]
-}
- 
-⸻
- 
-Core Requirements
-The skill must support:
-Named Entity Recognition
-Extract:
-	•	People
-	•	Organizations
-	•	Locations
-	•	Jurisdictions
-	•	Dates
-	•	Monetary values
- 
-⸻
- 
-Domain Entity Recognition
-Extract:
-	•	Claim IDs
-	•	Policy Numbers
-	•	Member IDs
-	•	Provider IDs
-	•	Authorization Numbers
-	•	Invoice Numbers
-	•	Contract IDs
-	•	Tax IDs
- 
-⸻
- 
-Configurable Entity Schemas
-The skill must allow runtime configuration.
-Example:
-Healthcare:
-entity_types:
-  - MEMBER_ID
-  - PROVIDER_ID
-  - ICD10_CODE
-  - CPT_CODE
-Insurance:
-entity_types:
-  - CLAIM_ID
-  - POLICY_NUMBER
-  - LOSS_DATE
-Financial Services:
-entity_types:
-  - ACCOUNT_NUMBER
-  - CUSTOMER_ID
-  - TAX_ID
-No code changes required.
- 
-⸻
- 
-Extraction Strategy
-Implement a hybrid extraction approach.
-Layer 1
-Rule-Based Extraction
-Use:
-	•	Regex patterns
-	•	Dictionaries
-	•	Validation rules
-Examples:
-claim_pattern = r"CLM-\d+"
-policy_pattern = r"POL-\d+"
- 
-⸻
- 
-Layer 2
-LLM Extraction
-Use configurable AI provider.
-Prompt should:
-	•	Extract only requested entities
-	•	Return structured JSON
-	•	Preserve source values
-	•	Avoid hallucinated entities
- 
-⸻
- 
-Layer 3
-Entity Validation
-Validate extracted values.
-Examples:
-	•	Date validation
-	•	Email validation
-	•	Phone validation
-	•	Policy format validation
-	•	Identifier format validation
-Invalid entities must be rejected.
- 
-⸻
- 
-Normalization
-Normalize extracted values.
-Examples:
-Dates:
-04/01/25
-becomes
-2025-04-01
-Amounts:
-USD 1,500.00
-becomes
-1500.00
-Names:
-Trim whitespace and standardize formatting.
- 
-⸻
- 
-Confidence Scoring
-Generate confidence score per entity.
-Combine:
-	•	Rule confidence
-	•	Validation confidence
-	•	LLM confidence
-Output score between:
-0.0 - 1.0
- 
-⸻
- 
-Explainability
-Each entity must contain:
-{
-  "reason": "Matched claim number pattern and validated format."
-}
-This will support auditability.
- 
-⸻
- 
-Performance Requirements
-Target:
-	•	P95 latency < 3 seconds
-	•	Async execution
-	•	Support documents up to 200 pages
-	•	Support batch extraction
- 
-⸻
- 
-Quality Requirements
-Acceptance Criteria:
-	•	F1 Score > 0.92 on labeled validation dataset
-	•	Precision > 0.90
-	•	Recall > 0.90
-	•	Entity schema configurable by vertical
-	•	Deterministic output structure
- 
-⸻
- 
-Architecture
-Generate:
-entity_extraction_skill/
+You are working on an existing insurance claims application. Analyze the current codebase, identify the relevant frontend, backend, workflow, and AI extraction components, and implement the following enhancements while maintaining existing functionality.
 
-├── providers/
-├── prompts/
-├── services/
-├── validators/
-├── normalizers/
-├── models/
-├── config/
-├── metrics/
-├── tests/
-└── README.md
- 
-⸻
- 
-Required Components
-Generate:
-	1.	EntityExtractionSkill
-	2.	AIProvider interface
-	3.	Provider adapters
-	4.	PromptTemplateManager
-	5.	Entity validators
-	6.	Entity normalizers
-	7.	Confidence scoring engine
-	8.	Configuration management
-	9.	Structured logging
-	10.	Metrics collection
-	11.	Unit tests
-	12.	Integration tests
-	13.	README
- 
-⸻
- 
-MCP Compatibility
-The skill will later be exposed through MCP.
-Design clean request/response contracts that can easily become:
-extract_entities(
-    text,
-    entity_schema
-)
-Do not implement MCP server code.
-Only implement the reusable skill.
- 
-⸻
- 
-Use:
-	•	Python 3.12
-	•	Async programming
-	•	Pydantic v2
-	•	Dependency Injection
-	•	SOLID principles
-	•	Clean Architecture
-	•	Enterprise-grade production standards
-	•	Full type hints
-	•	Comprehensive test coverage
+## Objective
+
+Improve the Employee Claim Filing experience by:
+
+1. Replacing employee selection dropdown with employee number entry.
+2. Moving document upload ahead of the information review step.
+3. Automatically populating claim information from uploaded documents.
+4. Converting the information page into a confirmation/review screen instead of a data entry form.
+
+---
+
+## Enhancement 1: Employee Number Input
+
+### Current Behavior
+
+Users select an employee from a dropdown when filing a claim.
+
+### Required Change
+
+Replace the dropdown with an Employee Number input field.
+
+### Requirements
+
+* Remove employee selection dropdown UI.
+* Add employee number text input field.
+* Validate employee number format.
+* On entry, retrieve employee record from existing employee service/database.
+* Display appropriate error states for:
+
+  * Invalid employee number
+  * Employee not found
+  * Service unavailable
+* Store employee information in the claim context/workflow state.
+
+### Acceptance Criteria
+
+* Employee lookup is performed using employee number.
+* User can proceed only after successful employee validation.
+* Existing claim workflow continues to function.
+
+---
+
+## Enhancement 2: Reorder Claim Filing Workflow
+
+### Current Flow
+
+Step 1 → Employee Information Form
+
+Step 2 → Document Upload
+
+Step 3 → Claim Submission
+
+### New Flow
+
+Step 1 → Employee Number Entry
+
+Step 2 → Document Upload
+
+Step 3 → AI Extraction Processing
+
+Step 4 → Information Confirmation
+
+Step 5 → Claim Submission
+
+### Requirements
+
+* Update routing/navigation.
+* Update progress indicators.
+* Preserve workflow state between steps.
+* Ensure uploaded documents are available to extraction services before review screen loads.
+
+### Acceptance Criteria
+
+* Information confirmation screen is only shown after document upload and extraction processing complete.
+* User cannot skip required steps.
+
+---
+
+## Enhancement 3: Auto-Populate Information from Uploaded Documents
+
+### Objective
+
+Leverage the existing document processing and extraction pipeline to pre-fill claim information automatically.
+
+### Implementation Requirements
+
+After document upload:
+
+1. Trigger extraction workflow.
+2. Parse all available extracted entities.
+3. Populate claim data model.
+
+Fields should include but are not limited to:
+
+### Employee Information
+
+* Employee Name
+* Employee Number
+* Employer
+
+### Incident Information
+
+* Date of Incident
+* Time of Incident
+* Location
+* Description of Loss
+* Cause of Loss
+
+### Injury Information
+
+* Injury Type
+* Body Part Affected
+* Severity
+
+### Coverage Information
+
+* Policy Number
+* Coverage Type
+* Coverage Status
+
+### Additional Metadata
+
+* Claim Type
+* Supporting Documentation
+* Any confidence scores produced by extraction models
+
+### Error Handling
+
+If extraction confidence is low:
+
+* Flag field as "Needs Review"
+* Highlight visually on confirmation screen
+
+If data is unavailable:
+
+* Display "Not Found"
+
+### Acceptance Criteria
+
+* Maximum available information is extracted automatically.
+* Manual user entry should not be required under normal circumstances.
+* Extracted information persists through claim submission.
+
+---
+
+## Enhancement 4: Information Confirmation Screen
+
+### Current Behavior
+
+Users manually complete claim information form.
+
+### New Behavior
+
+Users review AI-populated information and confirm accuracy.
+
+### Requirements
+
+Convert existing form page into a read-only review experience.
+
+Display:
+
+#### Employee Section
+
+* Employee Name
+* Employee Number
+* Employer
+
+#### Incident Section
+
+* Date of Incident
+* Cause of Loss
+* Incident Description
+
+#### Injury Section
+
+* Injury Type
+* Severity
+* Body Part
+
+#### Coverage Section
+
+* Policy Number
+* Coverage Status
+* Coverage Type
+
+#### Uploaded Documents Section
+
+* Uploaded Files
+* Extraction Status
+
+### User Actions
+
+Primary Action:
+
+* Confirm Information
+
+Secondary Action:
+
+* Report Incorrect Information
+
+If correction workflow already exists:
+
+* Route user to correction flow
+
+Otherwise:
+
+* Create placeholder correction request mechanism
+
+### UI Requirements
+
+* Information should appear read-only.
+* High-confidence fields should appear normal.
+* Low-confidence fields should be highlighted.
+* Missing fields should be clearly indicated.
+
+### Acceptance Criteria
+
+* User reviews information instead of manually entering data.
+* Confirmation action records user acknowledgment.
+* Claim can be submitted after confirmation.
+
+---
+
+## Technical Expectations
+
+Please:
+
+1. Analyze the existing architecture before making changes.
+2. Reuse existing services wherever possible.
+3. Minimize breaking changes.
+4. Update API contracts only when necessary.
+5. Add unit tests and integration tests.
+6. Update workflow/state management.
+7. Maintain existing styling and design patterns.
+8. Document all modified components and endpoints.
+
+---
+
+## Deliverables
+
+Provide:
+
+1. Architecture changes summary.
+2. Files modified.
+3. Database/schema changes (if any).
+4. API changes.
+5. Frontend workflow changes.
+6. Test coverage added.
+7. Any assumptions or technical risks identified.
