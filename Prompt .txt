@@ -1,19 +1,15 @@
-Task 2: Add AI Assumptions & Decision Summary
+Task 3: PDF Source Linking for Extracted Data
 
-Objective: Provide transparency into how the AI generated each memo.
+Objective: Improve traceability of extracted financial data.
 
 Requirements:
 
-Add a new "Assumptions & Decisions" section at the top of every generated memo.
-Include:
-Key assumptions made by the agents.
-Missing information identified.
-Decisions taken during analysis.
-Confidence level where applicable.
-Summary of major findings.
-Format similarly to the AIG demo.
+Every extracted financial number should include a source reference.
+Clicking the reference opens the source PDF.
+Automatically navigate to the exact page (and ideally highlight the extracted value).
+Support all extracted metrics used throughout the application.
 
 Acceptance Criteria:
 
-Every generated memo begins with the AI summary.
-Users can quickly understand why conclusions were reached.
+Every financial value is traceable back to its source.
+Users can validate extracted information with one click.
