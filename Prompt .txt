@@ -1,26 +1,19 @@
-Use this prompt:
+Task 2: Add AI Assumptions & Decision Summary
 
-> Please make the following UI updates:
->
-> 1. **Document Upload Page**
->
->    * Remove the **Extracted Financial Data** entry/section.
->    * Remove the **Request** label.
->    * Change the **Sector** field from a text input to a **dropdown/select** with appropriate options.
-> 2. **Cases Navigation**
->
->    * Remove the horizontal list of clickable case tabs/cards at the top of the page.
-> 3. **Branding & URL**
->
->    * Update the application branding so it no longer appears as a localhost application.
->    * Replace the current branding with **ExlCreditMemo** (or a similar name if preferred).
->    * Add an appropriate company/application logo to the header/navigation.
->    * Update the browser title, favicon, and any visible application name to reflect the new branding.
->    * Ensure the URL/base configuration is updated from localhost references to the new application name wherever applicable (development and production configuration as appropriate).
->
-> **Requirements**
->
-> * Preserve all existing functionality.
-> * Maintain the current design system and styling.
-> * Remove only the specified UI elements without affecting the rest of the workflow.
-> * Ensure the new dropdown and branding are responsive and consistent across the application.
+Objective: Provide transparency into how the AI generated each memo.
+
+Requirements:
+
+Add a new "Assumptions & Decisions" section at the top of every generated memo.
+Include:
+Key assumptions made by the agents.
+Missing information identified.
+Decisions taken during analysis.
+Confidence level where applicable.
+Summary of major findings.
+Format similarly to the AIG demo.
+
+Acceptance Criteria:
+
+Every generated memo begins with the AI summary.
+Users can quickly understand why conclusions were reached.
